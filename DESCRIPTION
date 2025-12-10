@@ -4,9 +4,14 @@ Title: DNA Methylation Preprocessing and Statistical Modelling Pipeline
 Version: 0.0.1
 Authors@R: 
     c(
-      person("Paul", "Ruiz", 
-             role = c("aut", "cre"))
+      person(
+        given = "Paul",
+        family = "Ruiz",
+        email = "ruizpint@qut.edu.au",
+        role = c("aut", "cre")
+      )
     )
+
 Description: 
     A modular, reproducible R-based pipeline for Illumina EPIC and EPICv2 
     DNA methylation array preprocessing, quality control, cell-type deconvolution, 
