@@ -1,0 +1,191 @@
+---
+title: "`r params$reportTitle`"
+author: "`r params$author`"
+date: "`r params$date`"
+subtitle: "Queensland University of Technology"
+abstract: |
+ This document is an automatic output of the dnapipeR pipeline. Within this report, preprocessing, quality control, normalisation, surrogate variable analysis, clock estimation, cell-type deconvolution, as well as generalized linear and linear mixed-effects modeling are presented. This script is still under development, so please excuse any formatting issues. If you have suggestions, questions, or requests, feel free to contact me at ruizpint@qut.edu.au.
+output:
+  pdf_document: 
+    toc: true
+    number_sections: true
+documentclass: article
+header-includes:
+  - \usepackage[a4paper, margin=2cm]{geometry}
+params:
+  reportTitle: "DNA methylation"
+  author: "School of Biomedical Sciences"
+  date: !r format(Sys.Date(), "%B %d, %Y")
+
+  qcDir: "figures/preprocessingMinfiEwasWater/enMix"
+  preprocessingDir: "figures/preprocessingMinfiEwasWater/qc"
+  postprocessingDir: "figures/preprocessingMinfiEwasWater/metrics"
+  svaDir: "figures/svaEnmix/sva"
+  glmDir: "figures/methylationGLM_T1"
+  glmmDir: "figures/methylationGLMM_T1T2"
+  figDir: "reports/figures"
+---
+
+```{r setup, include=F}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = F)
+knitr::opts_chunk$set(message = F)
+knitr::opts_chunk$set(cache = F)
+knitr::opts_chunk$set(verbose = F)
+
+library(knitr)
+library(gridExtra)
+library(grid)
+library(tiff)
+
+```
+
+```{r, include=F}
+knitr::opts_chunk$set(
+  fig.path = paste0(normalizePath(params$figDir, winslash="/"), "/"),
+  dev = "png"
+)
+
+```
+
+# Quality Control Plots
+
+```{r, echo=F, include=T, out.width="100%"}
+# Path to folder
+img_dir <- params$qcDir
+
+# List all jpg files
+imgs <- list.files(img_dir, pattern = "\\.jpg$", full.names = TRUE)
+
+# Include all
+include_graphics(imgs)
+
+```
+
+# Pre-processing and Filtering
+
+```{r, echo=F, include=T, out.width="100%"}
+# Folder with TIFFs
+dir <- params$preprocessingDir
+
+if (dir.exists(dir)) {
+  
+  files <- list.files(dir, pattern = "\\.tiff$", full.names = TRUE)
+  if (length(files) > 0) {
+    for (f in files) {
+      img <- readTIFF(f)
+      plot(as.raster(img))
+      title(main = basename(f))
+    }
+  }
+}
+
+```
+
+# Post-processing and Filtering 
+
+```{r, echo=F, include=T, out.width="100%"}
+dir <- params$postprocessingDir
+
+if (dir.exists(dir)) {
+  
+  files <- list.files(dir, pattern = "\\.tiff$", full.names = TRUE)
+
+  if (length(files) > 0) {
+    for (f in files) {
+      img <- readTIFF(f)
+      plot(as.raster(img))
+      title(main = basename(f))
+    }
+  }
+}
+
+```
+
+# Surrogate Variable Analysis
+
+```{r, echo=F, include=T, out.width="100%"}
+dir <- params$svaDir
+
+if (dir.exists(dir)) {
+  
+  files <- list.files(dir, pattern = "\\.tiff$", full.names = TRUE)
+
+  if (length(files) > 0) {
+    for (f in files) {
+      img <- readTIFF(f)
+      plot(as.raster(img))
+      title(main = basename(f))
+    }
+  }
+}
+
+```
+
+# General Linear Model
+
+```{r, echo=F, include=T, out.width="50%"}
+
+dir <- params$glmDir
+
+if (dir.exists(dir)) {
+  
+  files <- list.files(dir, pattern = "\\.tiff$", full.names = TRUE)
+
+  if (length(files) > 0) {
+    for (f in files) {
+      img <- readTIFF(f)
+      plot(as.raster(img))
+      title(main = basename(f))
+    }
+  }
+  
+  subdirs <- list.dirs(dir, recursive = FALSE)
+  for (sub in subdirs) {
+    sub_files <- list.files(sub, pattern = "\\.tiff$", full.names = TRUE)
+    if (length(sub_files) > 0) {
+      sub_name <- basename(sub)  
+      for (f in sub_files) {
+        img <- readTIFF(f)
+        plot(as.raster(img))
+        title(main = paste(sub_name, basename(f), sep = " - "))
+      }
+    }
+  }
+}
+
+
+```
+
+# Linear Mixed-Effects Model
+
+```{r, echo=F, include=T, out.width="50%"}
+dir <- params$glmmDir
+
+if (dir.exists(dir)) {
+  
+  files <- list.files(dir, pattern = "\\.tiff$", full.names = TRUE)
+  if (length(files) > 0) {
+    for (f in files) {
+      img <- readTIFF(f)
+      plot(as.raster(img))
+      title(main = basename(f))
+    }
+  }
+  
+  subdirs <- list.dirs(dir, recursive = FALSE)
+  for (sub in subdirs) {
+    sub_files <- list.files(sub, pattern = "\\.tiff$", full.names = TRUE)
+    if (length(sub_files) > 0) {
+      sub_name <- basename(sub)  
+      for (f in sub_files) {
+        img <- readTIFF(f)
+        plot(as.raster(img))
+        title(main = paste(sub_name, basename(f), sep = " - "))
+      }
+    }
+  }
+}
+
+```
+
