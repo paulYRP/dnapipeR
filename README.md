@@ -17,6 +17,23 @@ This repository contains a reproducible pipeline for DNA methylation (DNAm) anal
 --------------
 ## News
 
+### 10/12/2025
+Below is a **simpler, clean, copy-and-paste version** of the NEWS entry — written as an initial overview for your README.
+No extra content added. Just a concise summary of what changed.
+
+---
+
+# **NEWS (Initial Overview)**
+
+### **10/12/2025**
+
+A first functional version of **dnapipeR** has been created in the `package` branch.
+* **GitHub installation support** enabled via:
+  ```r
+  devtools::install_github("paulYRP/dnapipeR@package")
+  ```
+
+
 ### 28/10/2025
 - Added support for **multiple models** using the `MODEL` and `MODELS` variables inside the Makefile.
   - `MODEL ?= model1`, sets the default model if none is specified.
